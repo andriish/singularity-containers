@@ -22,7 +22,7 @@ with this.
 
 The containers are built with
 
-'singularity build --remote <name>.sif <name>.def'
+    singularity build --remote <name>.sif <name>.def
 
 For the remote build one needs a (free) account at 
 [sylabs](https://cloud.sylabs.io/builder). Follow the instructions there 
@@ -32,7 +32,7 @@ to setup remote access.
 
 The containers are built with
 
-'singularity build --fakeroot <name>.sif <name>.def'
+    singularity build --fakeroot <name>.sif <name>.def
 
 Please ask our IT group to set you up for singularity fakeroot usage. 
 This is very convenient, because it is fast and doesn't depend on 
@@ -48,7 +48,7 @@ packages are installed which can trigger errors.
 
 The containers are built with
 
-'sudo singularity build <name>.sif <name>.def'
+    sudo singularity build <name>.sif <name>.def
 
 This can be a self-administered laptop or a virtual machine (under 
 VirtualBox) under your control with a singularity installation. Needless 
@@ -59,7 +59,7 @@ experts since there are many unknowns with this method.
 
 Please look from your MPP PC under
 
-'/remote/ceph/common/vm/singularity/images/'
+    /remote/ceph/common/vm/singularity/images/
 
 to find the singularity images. 
 
@@ -67,11 +67,11 @@ to find the singularity images.
 
 Start them with 
 
-'singularity shell /remote/ceph/common/vm/singularity/images/centos8stream-yum.sif
+    $> singularity shell /remote/ceph/common/vm/singularity/images/centos8stream-yum.sif
 
 In order to connect a /cvmfs service on the host do
 
-'singularity shell --bind /cvmfs /remote/ceph/common/vm/singularity/images/centos8stream-yum.sif
+    $> singularity shell --bind /cvmfs /remote/ceph/common/vm/singularity/images/centos8stream-yum.sif
 
 This requires that the container has the /cvmfs mountpoint created 
 during the build.
