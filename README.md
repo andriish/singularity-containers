@@ -2,7 +2,7 @@
 # singularity-containers
 
 These singularity build recipies are used to build the singularity
-contained stored in /remote/ceph/common/remote/ceph/common/vm/singularity/images.
+containers stored in /remote/ceph/common/remote/ceph/common/vm/singularity/images.
 
 ## Different container builds
 
@@ -16,9 +16,9 @@ the difference.
 Container building generally needs system previledges, because some 
 pieces in the image need to have root permissions in order for the 
 container to work fine. With singularity there are three ways to deal 
-with this
+with this.
 
-### remotely
+### ... remotely
 
 The containers are built with
 
@@ -28,7 +28,7 @@ For the remote build one needs a (free) account at
 [sylabs](https://cloud.sylabs.io/builder). Follow the instructions there 
 to setup remote access.
 
-### with fakroot
+### ... with fakroot
 
 The containers are built with
 
@@ -44,8 +44,7 @@ containers work fine, since with these problematic packages are already
 installed. Builds from source are more problematic, since basic system 
 packages are installed which can trigger errors.
 
-
-### on a private machine with root access
+### ... on a private machine with root access
 
 The containers are built with
 
