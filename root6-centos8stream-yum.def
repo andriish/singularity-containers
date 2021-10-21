@@ -1,0 +1,37 @@
+
+Bootstrap: yum
+OSVersion: 8-stream
+MirrorURL: http://mirror.centos.org/centos/%{OSVERSION}/BaseOS/x86_64/os/
+Include: yum
+
+%help
+
+Centos8 stream container from yum bootstrap with root6
+
+%post
+
+    echo "Installing the packages inside the container"
+    # echo "In yum bootstrap with --fakeroot filesystem fails, workaround"
+    # yum -y install filesystem || (exit 0)
+    yum -y install 'dnf-command(config-manager)'
+    yum -y config-manager --set-enabled powertools
+
+    # EPEL
+    yum -y install epel-release
+    # cvmfs in container if not on host, can be slow, also depends on host allowing fuse.
+    # yum -y install https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest.noarch.rpm
+
+    # Various development tools
+    echo "Installing Development tools"
+    yum -y groupinstall "Development Tools"
+    yum -y install cmake gcc-gfortran libgfortran*
+
+    # Some helpers
+    yum -y install redhat-lsb-core libuuid-devel nano wget which
+
+    # root from CERN
+    yum -y install root* python3-root
+
+    # Can bind-mount cvmfs from host if available
+    mkdir /cvmfs
+
