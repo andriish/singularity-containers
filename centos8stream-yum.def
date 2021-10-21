@@ -1,0 +1,35 @@
+BootStrap: yum
+OSVersion: 8-stream
+MirrorURL: http://mirror.centos.org/centos/%{OSVERSION}/BaseOS/x86_64/os/
+Include: yum
+
+# Build centos 8 stream container from yum bootstrap
+# Serves as example for how to build container "from source"
+
+# Build with --remote (or as root) due to problem with package 
+# "filesystem" when --fakeroot is used for build, or 
+# use workaround commented below
+
+%help
+
+Centos8 stream container from yum boostrap
+
+%runscript
+
+    echo "This is what happens when you run the container..."
+
+%post
+
+    echo "Hello from inside the container"
+
+    # Works w/o --releasever but complains about missing release info
+    # yum -y --releasever=8 install filesystem || (exit 0)
+    # Workaround for build with --fakeroot
+    # yum -y install filesystem || (exit 0)
+
+    # Example package
+    yum -y install vim-minimal
+
+    # Example: prepare for /cvmfs bind-mount
+    mkdir /cvmfs
+

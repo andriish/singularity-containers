@@ -1,0 +1,30 @@
+BootStrap: yum
+OSVersion: 7
+MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/x86_64/
+Include: yum
+
+# Build from centos7 source
+
+# If you want the updates (available at the bootstrap date) to be installed
+# inside the container during the bootstrap instead of the General Availability
+# point release (7.x) then uncomment the following line
+#UpdateURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/updates/$basearch/
+
+%runscript
+
+    echo "This is what happens when you run the container..."
+
+%post
+
+    echo "Hello from inside the container"
+
+    cat /etc/bootstrap-yum.conf
+
+    # Workaround for build with --fakeroot
+    # yum -y --releasever=7 install filesystem || (exit 0)
+
+    # Need --releasever=7 since rpm db created from t-weed host might not
+    # be readable from (old) container os, not needed with --remote build
+    # yum -y --releasever=7 install vim-minimal
+    yum -y install vim-minimal
+

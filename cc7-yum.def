@@ -1,0 +1,36 @@
+
+Bootstrap: yum
+OSVersion: 7
+MirrorURL: http://linuxsoft.cern.ch/cern/centos/%{OSVERSION}/os/x86_64/
+UpdateURL: http://linuxsoft.cern.ch/cern/centos/%{OSVERSION}/os/x86_64/
+Include: yum
+
+# Example for CERN centos7 container from source
+
+%help
+
+Scientific Linux CERN 7.X singularity container
+
+%post
+
+    echo "Installing the packages inside the container"
+
+    # Get all cc7 updates
+    yum -y update
+
+    # Dev tools
+    echo "Installing Development tools"
+    yum -y groupinstall "Development Tools"
+
+    # Some helpers
+    yum -y install wget redhat-lsb-core libuuid-devel which nano
+    yum -y install libXft libXpm libSM libICE libXext
+
+    # krb5 setup
+    # yum -y install krb5-workstation
+    # echo "Fetch krb5.conf"
+    # wget https://www.mpp.mpg.de/~skluth/krb5.conf > /etc/krb5.conf
+
+    # Prepare for /cvmfs bind-mount
+    mkdir /cvmfs
+
