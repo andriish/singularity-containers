@@ -1,0 +1,21 @@
+
+Bootstrap: docker
+From: quay.io/centos/centos:stream8
+
+# From Centos 8 stream docker image which are not on docker but
+# on quay.io sponsored by RH
+
+%help
+
+CentosOS 8 stream singularity container
+
+%post
+
+    echo "Installing the packages inside the container"
+
+    # Package example
+    yum -y install vim-minimal
+
+    # Can bind-mount cvmfs from host if available
+    mkdir /cvmfs
+

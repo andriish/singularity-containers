@@ -1,0 +1,32 @@
+
+Bootstrap: docker
+From: rootproject/root:6.24.06-ubuntu20.04
+
+# This example builds from the root docker images with 
+# an fixed root version. See https://hub.docker.com/r/rootproject/root
+# for details
+
+%help
+
+ROOT Data Analysis Framework from official docker image
+with addons: boost libs, less, nano, git
+
+%runscript
+
+    # For root in /opt
+    echo "Singularity runscript: setup root in /opt"
+    source /opt/root/bin/thisroot.sh
+
+%post
+
+    echo "Installing the packages inside the container"
+    apt-get update
+    apt-get -y install less nano git lsb-release
+    apt-get clean
+
+    # unminimize for login use
+    yes | unminimize
+
+    # Prepare /cvmfs bind mount
+    mkdir /cvmfs
+
