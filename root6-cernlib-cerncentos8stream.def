@@ -1,0 +1,44 @@
+
+Bootstrap: docker
+From: cern/cs8-base
+
+# Container from CERN Centos 8 stream docker
+
+%help
+
+CERN CentosOS 8 stream singularity container
+
+%post
+
+    echo "Installing the packages inside the container"
+    yum -y install 'dnf-command(config-manager)'
+    yum -y config-manager --set-enabled powertools
+
+    # EPEL
+    yum -y install epel-release
+    yum -y update
+
+    # Login to cern from container if needed 
+    # (cern-krb5-conf-atlas broken in cc8s)
+    # yum -y install krb5-workstation cern-krb5-conf-atlas
+
+    # Various development tools
+    echo "Installing Development tools"
+    yum -y groupinstall "Development Tools"
+    yum -y install cmake gcc-gfortran libgfortran*
+
+    # Some helpers
+    yum -y install redhat-lsb-core libuuid-devel nano wget which
+
+    # root from CERN
+    yum -y install root* python3-root
+
+    # Andriis cernlib with some extra dependencies
+    yum -y install yum-plugin-copr
+    yum -y copr enable averbyts/HEPrpms
+    yum -y install libXft* libXpm* libSM* libICE* libXext*
+    yum -y install cernlib* paw* patchy*
+
+    # Can bind-mount cvmfs from host if available
+    mkdir /cvmfs
+
