@@ -1,0 +1,41 @@
+
+Bootstrap: docker
+From: cern/cc7-base:latest
+
+%help
+
+Scientific Linux CERN 7.X singularity container
+
+%post
+
+    echo "Installing the packages inside the container"
+    # yum -y install dnf-plugins-core
+
+    # EPEL
+    yum -y install epel-release
+    yum -y update
+
+    # Login to cern from container if needed
+    yum -y install krb5-workstation cern-krb5-conf-atlas
+
+    # Various development tools
+    echo "Installing Development tools"
+    yum -y groupinstall "Development Tools"
+    yum -y install cmake gcc-gfortran libgfortran*
+
+    # Some helpers
+    yum -y install redhat-lsb-core libuuid-devel nano wget which
+
+    # root from CERN via epel
+    yum -y install root* python3-root
+
+    # Andriis COPR HEPrpms (called fastjet for cc7) plus some
+    # extra libs for development
+    yum -y install yum-plugin-copr
+    yum -y copr enable averbyts/fastjet
+    yum -y install libXft* libXpm* libSM* libICE* libXext*
+    yum -y install cernlib* paw* patchy*
+
+    # Bind mount /cvmfs from host if available
+    mkdir /cvmfs
+
