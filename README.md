@@ -93,10 +93,10 @@ invisible to users. But you have been warned.
 
 For the question about what to include in the container, and what to 
 build from sources inside the running container, consider which packages 
-are needed, but will not need changes in the course of your work. These 
-packages should be included in the container image. Software, which you 
-expect to modify, should be built from sources inside the container 
-against the installed packages.
+are required, but will not need changes in the course of your work. 
+These packages should be included in the container image. Software, 
+which you expect to modify, should be built from sources inside the 
+container against the installed packages.
 
 ## HEPrpms COPR repository
 
@@ -108,19 +108,22 @@ project. Builds are available for centos8 (stream), and recent versions
 of fedora. For centos7 (or CERN centos7 "cc7") this COPR 
 [repo](https://copr.fedorainfracloud.org/coprs/averbyts/fastjet/) is 
 used, because some modern HEP projects don't work on centos7.
-See e.g. in 'root6-cernlib-centos8stream.def' how this repo
+See e.g. in "root6-cernlib-centos8stream.def" how this repo
 is used.
+
+# Contributing
+
+Any contributions, bug fixes, enhancements are very welcome. You are 
+welcome to store your (or your groups) container definitions here. This 
+could help others solving their problems. 
+
+In order to do so, please fork this repo on github, clone the forked 
+repo, and define a branch, e.g. with your name if can't think of anything 
+better. Then add+commit your contributions followed by a push to
+github. At last, create a pull request on github. This allows us
+to understand and merge your changes in a clean way. 
 
 # Any questions or problems?
 
 Please contact your groups IT expert or our IT group.
-
-
-
-
-
-
-
-
-
 
