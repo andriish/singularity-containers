@@ -14,7 +14,7 @@ the difference.
 
 ## Building the containers
 
-Container building generally needs system previledges, because some 
+Container building generally needs system privileges, because some 
 pieces in the image need to have root permissions in order for the 
 container to work fine. With singularity there are three ways to deal 
 with this.
@@ -29,7 +29,7 @@ For the remote build one needs a (free) account at
 [sylabs](https://cloud.sylabs.io/builder). Follow the instructions there 
 to setup remote access.
 
-### ... with fakroot
+### ... with fakeroot
 
 The containers are built with
 
