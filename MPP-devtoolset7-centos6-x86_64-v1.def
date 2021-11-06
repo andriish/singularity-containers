@@ -1,4 +1,5 @@
-ootstrap: docker
+# Copyright (C) 2021 Andrii Verbytskyi andrii.verbytskyi@mpp.mpg.de 
+bootstrap: docker
 From: centos:6
 %post
     cat /etc/yum.repos.d/CentOS-Base.repo
