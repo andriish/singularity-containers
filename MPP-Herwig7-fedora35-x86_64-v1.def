@@ -1,0 +1,15 @@
+Bootstrap: docker
+From: fedora:35
+%post
+    dnf -y update
+    dnf -y install 'dnf-command(config-manager)'
+    dnf copr enable -y averbyts/HEPrpms
+    dnf -y install Herwig Rivet python*YODA root LHAPDF
+    dnf -y clean all
+#Here put the pdf you would like to have, e.g.
+#   lhapdf install CT10        
+%environment
+    export LC_ALL=C
+%runscript
+    #Here can be some random stuff
+    date
