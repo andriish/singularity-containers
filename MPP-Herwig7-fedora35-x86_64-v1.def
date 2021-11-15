@@ -4,7 +4,7 @@ From: fedora:35
     dnf -y update
     dnf -y install 'dnf-command(config-manager)'
     dnf copr enable -y averbyts/HEPrpms
-    dnf -y install Herwig Rivet python*YODA root LHAPDF
+    dnf -y install Herwig Rivet python*YODA root lhapdf
     dnf -y clean all
 #Here put the pdf you would like to have, e.g.
 #   lhapdf install CT10        
@@ -13,3 +13,6 @@ From: fedora:35
 %runscript
     #Here can be some random stuff
     date
+
+#To build, do as root 'singularity build myh7.sif  MPP-Herwig7-fedora35-x86_64-v1.def'
+#To run, do  as user  'singularity exec myh7.sif some_command_I_want'
