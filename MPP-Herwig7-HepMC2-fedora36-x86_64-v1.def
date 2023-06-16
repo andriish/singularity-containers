@@ -1,0 +1,34 @@
+Bootstrap: docker
+From: fedora:36
+%post
+    dnf -y update
+    dnf -y install 'dnf-command(config-manager)' 'dnf-command(builddep)'
+    dnf copr enable -y averbyts/HEPrpms
+    dnf -y install Herwig Rivet python*YODA root lhapdf 
+    #Remove packages that are build with HepMC3
+    rpm -e Herwig ThePEG Rivet
+    #Install dev packages to build stuff with HepMC2
+    dnf -y install git rpm-build wget
+    git clone --depth 1 https://github.com/andriish/HEPrpms.git -b Herwig-HepMC2
+    cd HEPrpms
+    dnf -y builddep Rivet/3.1.8/Rivet.spec
+    sh srpmsbuild.sh  Rivet 3.1.8 --build
+    yum -y install Rivet/3.1.8/rpmbuild/RPMS/*/*rpm
+    dnf -y builddep ThePEG/2.2.3/ThePEG.spec
+    sh srpmsbuild.sh  ThePEG 2.2.3 --build
+    yum -y install ThePEG/2.2.3/rpmbuild/RPMS/*/*rpm
+    dnf -y builddep Herwig/7.2.3/Herwig.spec
+    sh srpmsbuild.sh  Herwig 7.2.3 --build
+    yum -y install Herwig/7.2.3/rpmbuild/RPMS/*/*rpm
+    cd ..
+    rm -rf HEPrpms
+#Here put the pdf you would like to have, e.g.
+#   lhapdf install CT10 LUXlep*
+%environment
+    export LC_ALL=C
+%runscript
+    #Here can be some random stuff
+    date
+
+#To build, do as root 'singularity build myh7.sif  MPP-Herwig7-fedora35-x86_64-v1.def'
+#To run, do  as user  'singularity exec myh7.sif some_command_I_want'

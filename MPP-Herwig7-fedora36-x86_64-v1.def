@@ -1,0 +1,17 @@
+Bootstrap: docker
+From: fedora:36
+%post
+    dnf -y update
+    dnf -y install 'dnf-command(config-manager)' 'dnf-command(builddep)'
+    dnf copr enable -y averbyts/HEPrpms
+    dnf -y install Herwig Rivet python*YODA root lhapdf 
+#Here put the pdf you would like to have, e.g.
+#   lhapdf install CT10 LUXlep*
+%environment
+    export LC_ALL=C
+%runscript
+    #Here can be some random stuff
+    date
+
+#To build, do as root 'singularity build myh7.sif  MPP-Herwig7-fedora35-x86_64-v1.def'
+#To run, do  as user  'singularity exec myh7.sif some_command_I_want'
