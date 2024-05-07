@@ -9,6 +9,7 @@ From: fedora:39
 #   lhapdf install CT10 LUXlep*
 %environment
     export LC_ALL=C
+    export RIVET_ANALYSIS_PATH=/usr/lib64/Rivet    
 %runscript
     #Here can be some random stuff
     date
