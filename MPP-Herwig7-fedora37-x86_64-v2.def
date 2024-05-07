@@ -1,0 +1,24 @@
+Bootstrap: docker
+From: fedora:37
+%post
+    dnf -y update
+    dnf -y install 'dnf-command(config-manager)'
+#Enable HEPrpms repository
+    dnf copr enable -y averbyts/HEPrpms
+#Install MCEGs
+    dnf -y install Herwig Rivet python*YODA root lhapdf Professor
+#install Julia
+    dnf -y install julia 
+#install jupyter
+    dnf -y install python3-notebook
+    dnf -y clean all
+#Here put the pdf you would like to have, e.g.
+#   lhapdf install CT10        
+%environment
+    export LC_ALL=C
+%runscript
+    #Here can be some random stuff
+    date
+
+#To build, do as root 'singularity build myh7.sif  MPP-Herwig7-fedora37-x86_64-v2.def'
+#To run, do  as user  'singularity exec myh7.sif some_command_I_want'

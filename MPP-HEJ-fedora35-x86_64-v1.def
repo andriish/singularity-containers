@@ -1,0 +1,23 @@
+Bootstrap: docker
+From: fedora:35
+%post
+    dnf -y update
+    dnf -y install 'dnf-command(config-manager)'
+    dnf copr enable -y averbyts/HEPrpms
+    dnf -y install wget automake autoconf liburing-devel gcc-gfortran Rivet Rivet-devel python*YODA root hdf5-devel lhapdf-devel python-lhapdf qcdloop-devel qcdloop boost-devel highfive-devel clhep-devel cmake gcc-c++ yaml-cpp-devel fastjet-devel git HepMC3-devel HepMC3-search-devel
+    dnf -y clean all
+#Here put the pdf you would like to have, e.g.
+    lhapdf install NNPDF31_nlo_as_0118
+    mkdir HEJ && cd HEJ && wget https://hej.hepforge.org/downloads/HEJ_2.1.3.tar.gz && tar zxfv HEJ_2.1.3.tar.gz && ls && cd ..
+    cmake -S HEJ -B BUILD -DEXCLUDE_ROOT=OFF -DEXCLUDE_HepMC=TRUE -DCMAKE_INSTALL_PREFIX=/usr
+    cmake --build BUILD -j 20
+    cmake --install BUILD
+    rm -rf BUILD HEJ
+%environment
+    export LC_ALL=C
+%runscript
+    #Here can be some random stuff
+    date
+
+#To build, do as root 'singularity build myh7.sif  MPP-HEJ-fedora35-x86_64-v1.def'
+#To run, do  as user  'singularity exec myh7.sif some_command_I_want'

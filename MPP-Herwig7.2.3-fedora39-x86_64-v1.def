@@ -1,0 +1,33 @@
+Bootstrap: docker
+From: fedora:39
+%post
+    dnf -y update
+    dnf -y install 'dnf-command(config-manager)' 'dnf-command(builddep)'
+    dnf copr enable -y averbyts/HEPrpms
+    dnf -y install Herwig Rivet python*YODA root lhapdf
+###########
+    dnf -y install root-tpython
+    dnf -y install git rpm-build wget
+    dnf -y builddep Herwig ThePEG Rivet
+    rpm -e Herwig ThePEG ThePEG-devel Rivet Rivet-devel YODA YODA-devel python3-YODA
+    git clone --depth 1 https://github.com/andriish/HEPrpms.git -b master 
+    cd HEPrpms 
+    sh srpmsbuild.sh YODA 1.9.9 --build
+    rpm -Uvh YODA/1.9.9/rpmbuild/RPMS/*/*.rpm
+    sh srpmsbuild.sh Rivet 3.1.9 --build
+    rpm -Uvh Rivet/3.1.9/rpmbuild/RPMS/*/*.rpm
+    sh srpmsbuild.sh ThePEG 2.2.3 --build
+    rpm -Uvh ThePEG/2.2.3/rpmbuild/RPMS/*/*.rpm
+    sh srpmsbuild.sh Herwig 7.2.3 --build
+    rpm -Uvh Herwig/7.2.3/rpmbuild/RPMS/*/*.rpm
+###########
+#Here put the pdf you would like to have, e.g.
+#   lhapdf install CT10 LUXlep*
+%environment
+    export LC_ALL=C
+%runscript
+    #Here can be some random stuff
+    date
+
+#To build, do as root 'singularity build myh7.sif  MPP-Herwig7-fedora35-x86_64-v1.def'
+#To run, do  as user  'singularity exec myh7.sif some_command_I_want'
